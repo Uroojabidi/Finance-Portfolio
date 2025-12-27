@@ -1,0 +1,51 @@
+Loan_ID,Age,Citizenship,Major,Degree_Level,Expected_Income,Employment_Status,Credit_Score,Loan_Amount,Interest_Rate,Monthly_Payment,DTI_Ratio,Has_Cosigner,Default
+UCH001,22,U.S.,Economics,Bachelor,65000,Employed,720,30000,6.2,335,0.062,Yes,No
+UCH002,24,International,Physics,PhD,95000,Employed,N/A,50000,8.5,580,0.073,No,No
+UCH003,23,U.S.,English,Bachelor,38000,Unemployed,610,42000,9.1,480,0.152,No,Yes
+UCH004,26,U.S.,Computer Science,Master,110000,Employed,780,35000,5.8,320,0.035,Yes,No
+UCH005,22,U.S.,Sociology,Bachelor,40000,Unemployed,590,48000,10.2,520,0.156,No,Yes
+UCH006,25,U.S.,Mathematics,Master,92000,Employed,760,32000,6,295,0.038,Yes,No
+UCH007,21,U.S.,History,Bachelor,36000,Unemployed,580,45000,10.5,500,0.167,No,Yes
+UCH008,28,U.S.,Data Science,Master,105000,Employed,800,28000,5.5,260,0.03,Yes,No
+UCH009,23,U.S.,Philosophy,Bachelor,39000,Unemployed,600,46000,9.8,510,0.157,No,Yes
+UCH010,24,U.S.,Biology,Bachelor,52000,Employed,690,38000,7,375,0.087,Yes,No
+UCH011,27,International,Economics,PhD,88000,Employed,N/A,42000,8,460,0.063,No,No
+UCH012,22,U.S.,Art History,Bachelor,35000,Unemployed,570,44000,11,490,0.168,No,Yes
+UCH013,25,U.S.,Engineering,Master,115000,Employed,810,30000,5.2,275,0.029,Yes,No
+UCH014,23,U.S.,Psychology,Bachelor,41000,Unemployed,605,43000,9.5,485,0.142,No,Yes
+UCH015,26,U.S.,Finance,Master,120000,Employed,820,33000,5,280,0.028,Yes,No
+UCH016,21,U.S.,Theater,Bachelor,34000,Unemployed,560,47000,11.2,525,0.185,No,Yes
+UCH017,24,U.S.,Chemistry,Bachelor,55000,Employed,700,36000,6.8,350,0.076,Yes,No
+UCH018,29,U.S.,Public Policy,Master,78000,Employed,740,39000,6.5,380,0.058,Yes,No
+UCH019,22,U.S.,Religious Studies,Bachelor,37000,Unemployed,585,45500,10,505,0.164,No,Yes
+UCH020,25,U.S.,Statistics,Master,100000,Employed,790,31000,5.6,285,0.034,Yes,No
+UCH021,23,U.S.,Anthropology,Bachelor,39500,Unemployed,595,44500,9.7,495,0.15,No,Yes
+UCH022,27,U.S.,Computer Engineering,Master,125000,Employed,830,29000,5.1,265,0.025,Yes,No
+UCH023,22,U.S.,Linguistics,Bachelor,36500,Unemployed,575,46500,10.8,515,0.169,No,Yes
+UCH024,24,U.S.,Economics,Bachelor,63000,Employed,710,34000,6.4,340,0.065,Yes,No
+UCH025,26,International,Mathematics,PhD,90000,Employed,N/A,40000,7.8,440,0.059,No,No
+UCH026,21,U.S.,Classics,Bachelor,35500,Unemployed,565,47500,11.5,530,0.179,No,Yes
+UCH027,25,U.S.,Electrical Engineering,Master,118000,Employed,815,32500,5.3,290,0.029,Yes,No
+UCH028,23,U.S.,Gender Studies,Bachelor,38500,Unemployed,600,43500,9.9,490,0.152,No,Yes
+UCH029,24,U.S.,Physics,Bachelor,58000,Employed,720,37000,6.6,360,0.074,Yes,No
+UCH030,28,U.S.,Business Analytics,Master,108000,Employed,795,30500,5.4,270,0.03,Yes,No
+UCH031,22,U.S.,Music,Bachelor,33000,Unemployed,550,48500,12,540,0.196,No,Yes
+UCH032,25,U.S.,Environmental Science,Bachelor,49000,Employed,680,40000,7.2,385,0.094,Yes,No
+UCH033,27,U.S.,Law,JD,85000,Employed,750,45000,6,415,0.059,Yes,No
+UCH034,21,U.S.,Creative Writing,Bachelor,32000,Unemployed,540,49000,12.5,545,0.205,No,Yes
+UCH035,26,U.S.,Machine Learning,Master,130000,Employed,840,27000,4.8,250,0.023,Yes,No
+UCH036,23,U.S.,Political Science,Bachelor,42000,Unemployed,615,42500,9.3,470,0.134,No,Yes
+UCH037,24,U.S.,Neuroscience,Bachelor,60000,Employed,730,33000,6.1,330,0.066,Yes,No
+UCH038,29,U.S.,MBA,Master,140000,Employed,850,35000,4.5,300,0.026,Yes,No
+UCH039,22,U.S.,Film Studies,Bachelor,31000,Unemployed,530,49500,13,550,0.213,No,Yes
+UCH040,25,U.S.,Biomedical Engineering,Master,112000,Employed,805,31500,5.7,280,0.03,Yes,No
+UCH041,21,U.S.,Drama,Bachelor,30000,Unemployed,520,50000,13.5,560,0.224,No,Yes
+UCH042,24,U.S.,Economics,Master,98000,Employed,770,36000,6.3,335,0.041,Yes,No
+UCH043,26,U.S.,Computer Science,PhD,102000,Employed,785,38000,5.9,345,0.041,Yes,No
+UCH044,22,U.S.,Sociology,Bachelor,37500,Unemployed,590,44000,10.1,485,0.155,No,Yes
+UCH045,23,U.S.,Mathematics,Bachelor,54000,Employed,695,35000,6.9,345,0.077,Yes,No
+UCH046,27,U.S.,Data Science,Master,106000,Employed,790,29000,5.5,265,0.03,Yes,No
+UCH047,21,U.S.,Philosophy,Bachelor,34500,Unemployed,555,48000,11.8,530,0.184,No,Yes
+UCH048,25,U.S.,Finance,Master,118000,Employed,820,34000,5,290,0.029,Yes,No
+UCH049,22,U.S.,History,Bachelor,36500,Unemployed,580,45000,10.4,495,0.162,No,Yes
+UCH050,24,U.S.,Computer Science,Bachelor,70000,Employed,740,32000,6,320,0.055,Yes,No

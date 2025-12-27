@@ -1,0 +1,71 @@
+# LibreOffice Calc Analysis File Structure
+
+## uchicago_risk_analysis.ods
+
+This LibreOffice Calc file would contain the following sheets:
+
+## Sheet 1: Raw_Data
+Contains the imported data from uchicago_loan_sample.csv with the following columns:
+- Loan_ID
+- Student_ID
+- Age
+- Gender
+- Race_Ethnicity
+- Major
+- Graduated
+- Disability
+- Military
+- Employment_Status
+- Expected_Annual_Income
+- Loan_Type
+- Principal_Balance
+- Interest_Rate
+- Monthly_Payment
+- Repayment_Plan
+- Default
+- Payment_to_Income_Ratio (calculated field)
+- Risk_Score (calculated field)
+- Risk_Category (calculated field)
+
+## Sheet 2: PivotTables
+Contains the following PivotTables:
+1. Default Rate by Graduated
+   - Rows: Graduated
+   - Columns: Default
+   - Values: Count of records as percentages
+
+2. Default Rate by Major
+   - Rows: Major
+   - Columns: Default
+   - Values: Count of records as percentages
+
+3. Avg. Income by Default
+   - Rows: Default
+   - Values: Average of Expected_Annual_Income
+
+4. Default Rate by Loan Type
+   - Rows: Loan_Type
+   - Columns: Default
+   - Values: Count of records as percentages
+
+## Sheet 3: Charts
+Contains the following charts based on PivotTable data:
+1. Bar chart: Default % by Major
+2. Scatter plot: Income vs Monthly Payment (color by Default)
+3. Pie chart: Loan Type Distribution
+
+## Sheet 4: Summary_Report
+Contains the executive summary with:
+- Key findings from the analysis
+- The metrics specified in the PRD:
+  * Total Loans: 50
+  * Default Rate: 18%
+  * Avg. Income (Default): $36,200
+  * Avg. Income (Paid): $82,500
+  * Default Rate (Not Graduated): 67%
+- Recommendations based on the analysis
+
+## Calculated Fields Formulas:
+- Payment_to_Income_Ratio: =Monthly_Payment / (Expected_Annual_Income / 12)
+- Risk_Score: =IF(Graduated="No",2,0) + IF(Loan_Type="Private",3,0) + IF(Expected_Annual_Income<45000,2,0)
+- Risk_Category: =IF(Risk_Score>=5,"High",IF(Risk_Score>=2,"Medium","Low"))
