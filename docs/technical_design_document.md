@@ -1,41 +1,64 @@
 # 📋 Technical Design Document (TDD)
-**Project Title**: Student Loan Default Risk Analysis – University of Chicago  
-**Author**: Urooj Abidi  
-**Date**: December 26, 2025  
-**Tool**: LibreOffice Calc (v7.6+)  
+**Repository**: https://github.com/Uroojabidi/Finance-Portfolio/
+**Project Title**: Student Loan Default Risk Analysis – University of Chicago
+**Author**: Urooj Abidi
+**Email**: uroojabid203@gmail.com
+**Date**: December 26, 2025
+**Tool**: Python CLI Application
 **License**: MIT (open-source portfolio project)
+
+---
+
+## 📋 Table of Contents
+- [Overview](#-overview)
+- [System Architecture](#-system-architecture)
+- [Data Architecture](#-data-architecture)
+- [Implementation Steps](#-implementation-steps)
+- [Technical Specifications](#-technical-specifications)
+- [Assumptions](#-assumptions)
+- [Quality Assurance](#-quality-assurance)
+- [Deployment Plan](#-deployment-plan)
+- [Success Criteria](#-success-criteria)
+- [Troubleshooting Guide](#-troubleshooting-guide)
 
 ---
 
 ## 1. 🎯 Overview
 
-This Technical Design Document (TDD) outlines the technical approach, implementation steps, and system architecture for the Student Loan Default Risk Analysis project. The document details how to implement a comprehensive risk analysis using LibreOffice Calc, focusing on identifying key predictors of student loan default among University of Chicago-affiliated borrowers.
+This Technical Design Document (TDD) outlines the technical approach, implementation steps, and system architecture for the Student Loan Default Risk Analysis project. The document details how to implement a comprehensive risk analysis using a Python CLI application, focusing on identifying key predictors of student loan default among University of Chicago-affiliated borrowers.
 
 ---
 
 ## 2. 🏗️ System Architecture
 
-### 2.1 Technology Stack
+### 2.1 Architecture Diagram
+View the system architecture diagram [here](../diagram/architecture.mmd).
+
+### 2.2 Technology Stack
 | Component | Technology | Version | Purpose |
 |-----------|------------|---------|---------|
-| **Primary Tool** | LibreOffice Calc | v7.6+ | Data analysis and visualization |
-| **Data Format** | CSV | UTF-8 | Input dataset storage |
-| **Output Format** | ODS | OpenDocument | Analysis workbook |
+| **Primary Tool** | Python | 3.7+ | Data analysis and risk assessment |
+| **Data Processing** | pandas | 1.3+ | Data manipulation and analysis |
+| **CLI Framework** | argparse | Built-in | Command-line argument parsing |
+| **Data Format** | CSV | UTF-8 | Input/output data storage |
 | **Repository** | Git | Any | Version control |
 | **Platform** | GitHub | - | Code hosting and documentation |
 
-### 2.2 File Structure
+### 2.3 File Structure
 ```
 /uchicago-student-loan-risk/
-├── README.md                 # Project overview, findings, screenshots
-├── CHANGELOG.md              # Version history and changes
+├── README.md                 # Project overview, usage instructions
+├── risk_analyzer.py          # Main Python CLI application
+├── requirements.txt          # Python dependencies
 ├── data/
-│   └── uchicago_loan_sample.csv
-├── analysis/
-│   └── uchicago_risk_analysis.ods   # LibreOffice Calc file
+│   └── Qwen_csv_20251225_upsmabt6b.csv
+├── output/
+│   └── risk_report.csv       # Risk analysis output
 └── docs/
     ├── PRD.md                # Product Requirements Document
-    ├── TDD.md                # Technical Design Document (this file)
+    ├── technical_design_document.md # Technical Design Document (this file)
+    ├── diagram/              # Architecture diagrams
+    │   └── architecture.mmd  # System architecture diagram
     ├── methodology.md        # EDA steps, assumptions, variable definitions
     └── references.md         # Citations (APA format)
 ```
@@ -48,181 +71,157 @@ This Technical Design Document (TDD) outlines the technical approach, implementa
 | Field | Type | Constraints | Description |
 |-------|------|-------------|-------------|
 | `Loan_ID` | TEXT | UNIQUE, NOT NULL | Unique identifier |
-| `Student_ID` | TEXT | NOT NULL | Anonymized student ID |
 | `Age` | INTEGER | 18 ≤ Age ≤ 65 | Borrower age at loan origination |
-| `Gender` | TEXT | Enum: Male, Female, Non-Binary | Gender identity |
-| `Race_Ethnicity` | TEXT | Enum: Federal categories | For equity analysis |
+| `Citizenship` | TEXT | Enum: U.S., International | Citizenship status |
 | `Major` | TEXT | NOT NULL | Field of study |
-| `Graduated` | BOOLEAN | Enum: Yes, No | Degree completion status |
-| `Disability` | BOOLEAN | Enum: Yes, No | Disability status |
-| `Military` | BOOLEAN | Enum: Yes, No | Military service |
-| `Employment_Status` | TEXT | Enum: Unemployed, Part-Time, Full-Time | Current employment |
-| `Expected_Annual_Income` | CURRENCY | > 0 | Projected post-grad income |
-| `Loan_Type` | TEXT | Enum: Federal, Private | Loan category |
-| `Principal_Balance` | CURRENCY | > 0 | Initial loan amount |
-| `Interest_Rate` | PERCENTAGE | 0 ≤ Rate ≤ 20% | Annual rate |
-| `Monthly_Payment` | CURRENCY | ≥ 0 | Estimated payment |
-| `Repayment_Plan` | TEXT | Enum: Standard, Income-Driven | Repayment option |
-| `Default` | BOOLEAN | Enum: Yes, No | Target variable |
+| `Degree_Level` | TEXT | Enum: Bachelor, Master, PhD, JD | Educational level |
+| `Expected_Income` | INTEGER | > 0 | Projected post-grad income |
+| `Employment_Status` | TEXT | Enum: Employed, Unemployed | Current employment |
+| `Credit_Score` | INTEGER or N/A | ≥ 300 if present | Credit score (if available) |
+| `Loan_Amount` | INTEGER | > 0 | Loan principal amount |
+| `Interest_Rate` | FLOAT | 0 ≤ Rate ≤ 20% | Annual interest rate |
+| `Monthly_Payment` | INTEGER | ≥ 0 | Estimated monthly payment |
+| `DTI_Ratio` | FLOAT | ≥ 0 | Debt-to-income ratio |
+| `Has_Cosigner` | TEXT | Enum: Yes, No | Cosigner presence |
+| `Default` | TEXT | Enum: Yes, No | Target variable |
 
 ### 3.2 Calculated Fields Schema
-| Field | Formula | Purpose |
-|-------|---------|---------|
-| `Payment_to_Income_Ratio` | `=Monthly_Payment / (Expected_Annual_Income / 12)` | Financial stress indicator |
-| `Risk_Score` | `=IF(Graduated="No",2,0) + IF(Loan_Type="Private",3,0) + IF(Expected_Annual_Income<45000,2,0)` | Composite risk measure |
-| `Risk_Category` | `=IF(Risk_Score>=5,"High",IF(Risk_Score>=2,"Medium","Low"))` | Risk classification |
+| Field | Python Calculation | Purpose |
+|-------|----------------------|---------|
+| `Payment_to_Income_Ratio` | `Monthly_Payment / (Expected_Income / 12)` | Financial stress indicator |
+| `Risk_Score` | Weighted sum of risk factors | Composite risk measure |
+| `Risk_Category` | Categorized based on Risk_Score | Risk classification |
 
 ---
 
 ## 4. 🔧 Implementation Steps
 
-### 4.1 Phase 1: Data Preparation
-1. **Generate Synthetic Dataset**
-   - Create 50-row CSV file with specified schema
-   - Ensure realistic distributions based on college data
-   - Balance default rates appropriately (18% as per PRD)
+### 4.1 Phase 1: Environment Setup
+1. **Create Python project structure**
+   - Set up virtual environment
+   - Install required dependencies (pandas, argparse)
+   - Create requirements.txt
 
-2. **Data Import Process**
-   - Import CSV into LibreOffice Calc
-   - Validate data types and ranges
-   - Clean and format data appropriately
+2. **Initialize project files**
+   - Create main application file (risk_analyzer.py)
+   - Set up directory structure
+   - Create initial documentation
 
-3. **Data Validation**
-   - Verify all 50 rows imported correctly
+### 4.2 Phase 2: Data Loading and Validation
+1. **Implement CSV loading functionality**
+   - Use pandas to read CSV file
+   - Validate required columns exist
+   - Check data types and ranges
+
+2. **Implement data validation**
+   - Verify all required fields are present
    - Check for missing or invalid values
    - Ensure data types match schema specifications
 
-### 4.2 Phase 2: Formula Implementation
+### 4.3 Phase 3: Risk Calculation Implementation
 1. **Calculate Payment_to_Income_Ratio**
-   - Add formula to new column in spreadsheet
-   - Format as percentage
+   - Add calculated column to DataFrame
+   - Handle division by zero cases
    - Validate calculations with sample data
 
 2. **Calculate Risk_Score**
-   - Add formula to new column in spreadsheet
+   - Implement weighted risk factor calculation
    - Test with various input combinations
    - Verify scoring logic is correct
 
 3. **Calculate Risk_Category**
-   - Add formula to new column in spreadsheet
+   - Implement category assignment based on thresholds
    - Validate category assignments
    - Format for readability
 
-### 4.3 Phase 3: Analysis Implementation
-1. **Create PivotTable 1: Default Rate by Graduated**
-   - Select relevant data range
-   - Configure row fields (Graduated) and column fields (Default)
-   - Calculate percentages
+### 4.4 Phase 4: Analysis Implementation
+1. **Implement Summary Statistics**
+   - Calculate overall default rate
+   - Compute key metrics (average income, loan amounts, etc.)
+   - Generate statistical summaries
 
-2. **Create PivotTable 2: Default Rate by Major**
-   - Select relevant data range
-   - Configure row fields (Major) and column fields (Default)
-   - Calculate percentages
+2. **Implement Risk Factor Analysis**
+   - Analyze default rates by major
+   - Analyze default rates by employment status
+   - Analyze default rates by citizenship
+   - Analyze default rates by degree level
 
-3. **Create PivotTable 3: Avg. Income by Default**
-   - Select relevant data range
-   - Configure row fields (Default) and value fields (Expected_Annual_Income)
-   - Calculate averages
+### 4.5 Phase 5: Output Generation
+1. **Create risk analysis report**
+   - Generate CSV output with comprehensive analysis
+   - Include individual risk assessments
+   - Add summary statistics and key findings
 
-4. **Create PivotTable 4: Default Rate by Loan Type**
-   - Select relevant data range
-   - Configure row fields (Loan_Type) and column fields (Default)
-   - Calculate percentages
+2. **Format output for readability**
+   - Apply consistent formatting
+   - Ensure CSV structure is well-organized
+   - Add headers and descriptions
 
-### 4.4 Phase 4: Visualization Implementation
-1. **Create Bar Chart: Default % by Major**
-   - Use PivotTable 2 data
-   - Configure as percentage bar chart
-   - Add appropriate labels and titles
+### 4.6 Phase 6: CLI Interface Implementation
+1. **Implement command-line argument parsing**
+   - Input file path
+   - Output file path
+   - Optional verbose mode
 
-2. **Create Scatter Plot: Income vs Monthly Payment**
-   - Use raw data for X (Income) and Y (Monthly Payment)
-   - Color code by Default status
-   - Add trend lines if appropriate
-
-3. **Create Pie Chart: Loan Type Distribution**
-   - Use Loan_Type counts
-   - Configure as pie chart
-   - Add percentage labels
-
-### 4.5 Phase 5: Report Generation
-1. **Create Summary Report Sheet**
-   - Include executive summary text
-   - Create key metrics table
-   - Add recommendations section
-
-2. **Format Report for Readability**
-   - Apply consistent styling
-   - Ensure one-page format
-   - Add visual hierarchy
-
-### 4.6 Phase 6: Documentation and Deployment
-1. **Create Documentation Files**
-   - Update README.md with project details
-   - Create methodology.md
-   - Create references.md with APA citations
-
-2. **Prepare GitHub Repository**
-   - Initialize Git repository
-   - Create appropriate directory structure
-   - Add all required files
-
-3. **Create CHANGELOG.md**
-   - Document all changes and versions
-   - Follow semantic versioning
+2. **Create main application flow**
+   - Load data from specified input file
+   - Perform risk analysis
+   - Generate output report
+   - Provide console feedback
 
 ---
 
 ## 5. 🧮 Technical Specifications
 
-### 5.1 LibreOffice Calc Functions Used
-| Function Type | Examples | Purpose |
-|---------------|----------|---------|
-| **Logical Functions** | IF, AND, OR | Conditional logic for risk scoring |
-| **Mathematical Functions** | SUM, AVERAGE, COUNT | Statistical calculations |
-| **Lookup Functions** | VLOOKUP, HLOOKUP | Data association (if needed) |
-| **Statistical Functions** | MEDIAN, STDEV, CORREL | Advanced analysis |
+### 5.1 Python Libraries Used
+| Library | Purpose | Functions Used |
+|---------|---------|----------------|
+| **pandas** | Data manipulation | DataFrame, read_csv, groupby, describe |
+| **argparse** | CLI argument parsing | ArgumentParser |
+| **sys** | System-specific parameters | exit, stderr |
+| **os** | Operating system interface | path operations |
 
-### 5.2 PivotTable Configuration
-| Element | Configuration | Purpose |
-|---------|---------------|---------|
-| **Row Fields** | Categorical variables (Major, Graduated, etc.) | Grouping data |
-| **Column Fields** | Default status | Comparison across categories |
-| **Value Fields** | Counts, Averages, Percentages | Quantitative analysis |
-| **Filter Fields** | Time periods (if applicable) | Data segmentation |
+### 5.2 Risk Scoring Algorithm
+| Factor | Weight | Condition |
+|--------|--------|-----------|
+| Employment Status | 3 points | Unemployed = 3, Employed = 0 |
+| Expected Income | 2 points | < $45,000 = 2, ≥ $45,000 = 0 |
+| DTI Ratio | 2 points | > 0.20 = 2, ≤ 0.20 = 0 |
+| Credit Score | 1 point | < 600 = 1, ≥ 600 or N/A = 0 |
+| Citizenship | 1 point | International = 1, U.S. = 0 |
+| Degree Level | 1 point | Bachelor = 1, Master = 0, PhD = 0, JD = 0 |
 
-### 5.3 Chart Specifications
-| Chart Type | Data Source | Configuration |
-|------------|-------------|---------------|
-| **Bar Chart** | PivotTable 2 | Percentage format, color-coded |
-| **Scatter Plot** | Raw data | X=Income, Y=Payment, Color=Default |
-| **Pie Chart** | Loan Type counts | Percentage format with labels |
+### 5.3 Risk Category Thresholds
+| Category | Score Range |
+|----------|-------------|
+| **Low Risk** | Score < 2 |
+| **Medium Risk** | 2 ≤ Score ≤ 4 |
+| **High Risk** | Score > 4 |
 
 ---
 
 ## 6. ⚠️ Assumptions
 
 ### 6.1 Data Assumptions
-- The synthetic dataset will follow realistic distributions based on actual college statistics
-- The relationships between variables (e.g., graduation rate, loan type, income) reflect real-world patterns
-- The sample size of 50 loans is sufficient for exploratory analysis
-- The 18% default rate mentioned in the PRD is achievable in the synthetic data
+- The input CSV will follow the specified schema
+- The relationships between variables reflect real-world patterns
+- Missing credit scores (N/A) are treated as neutral risk factors
+- The provided dataset is representative of the population being analyzed
 
 ### 6.2 Technical Assumptions
-- LibreOffice Calc version 7.6+ is available and functional
-- The user has basic familiarity with spreadsheet operations
-- The analysis will be performed on a local machine without cloud dependencies
-- All formulas and functions used are compatible with LibreOffice Calc
+- Python 3.7+ is available on the target system
+- The user has basic familiarity with command-line interfaces
+- The analysis will be performed on a local machine
+- CSV files are properly formatted and accessible
 
 ### 6.3 Business Assumptions
-- The risk factors identified (non-graduation, private loans, low income) are valid predictors
-- The scoring system (Risk_Score) appropriately weights these factors
-- The 45K income threshold is a meaningful indicator of risk
+- The risk factors identified are valid predictors of default
+- The scoring system appropriately weights different risk factors
+- The thresholds for risk categories are meaningful
 - Recommendations will be actionable for financial counselors
 
 ### 6.4 Privacy and Ethics Assumptions
 - All data used is synthetic and does not contain real personal information
-- Race and gender are used only for equity analysis, not for predictive modeling
 - The project is clearly labeled as an educational exercise
 - No real borrower data is accessed or used
 
@@ -231,32 +230,72 @@ This Technical Design Document (TDD) outlines the technical approach, implementa
 ## 7. 🧪 Quality Assurance
 
 ### 7.1 Data Validation Checks
-- Verify dataset contains exactly 50 rows
-- Validate all data types match schema specifications
-- Check for missing or null values in required fields
+- Verify required columns exist in input CSV
+- Validate data types match expected schema
+- Check for missing or null values in critical fields
 - Confirm calculated fields produce expected ranges
 
-### 7.2 Formula Validation
-- Test all formulas with known input/output pairs
-- Verify conditional logic in Risk_Score and Risk_Category
+### 7.2 Risk Calculation Validation
+- Test risk scoring with known input/output pairs
+- Verify all risk factors are properly weighted
 - Check for division by zero or other mathematical errors
-- Validate formatting and display of calculated values
+- Validate risk category assignments
 
-### 7.3 Analysis Validation
-- Confirm PivotTables update correctly when data changes
-- Verify chart data sources are properly linked
-- Test dynamic features for refresh capability
-- Ensure all visualizations are readable and informative
+### 7.3 Output Validation
+- Confirm CSV output is properly formatted
+- Verify all required analysis components are included
+- Test with various input files to ensure robustness
+- Ensure console output is informative and clear
+
+### 7.4 Testing Strategy
+The application implements a comprehensive testing strategy with 19 unit and integration tests:
+
+#### Risk Calculation Tests
+- `test_calculate_risk_score_employed_low_income`: Validates risk score calculation for employed person with low income
+- `test_calculate_risk_score_unemployed`: Validates risk score calculation for unemployed person
+- `test_calculate_risk_score_high_dti`: Validates risk score calculation for high DTI ratio
+- `test_calculate_risk_score_low_credit`: Validates risk score calculation for low credit score
+- `test_calculate_risk_score_international`: Validates risk score calculation for international student
+- `test_calculate_risk_score_all_factors`: Validates risk score calculation with all risk factors
+- `test_assign_risk_category_low`: Validates risk category assignment for low risk scores
+- `test_assign_risk_category_medium`: Validates risk category assignment for medium risk scores
+- `test_assign_risk_category_high`: Validates risk category assignment for high risk scores
+
+#### Risk Calculation Utility Tests
+- `test_calculate_payment_to_income_ratio`: Validates payment-to-income ratio calculation
+- `test_calculate_payment_to_income_ratio_zero_income`: Validates payment-to-income ratio with zero income
+
+#### Data Loading and Validation Tests
+- `test_load_and_validate_data_success`: Validates successful loading and validation of data
+- `test_load_and_validate_data_missing_file`: Tests error handling for missing file
+- `test_load_and_validate_data_missing_columns`: Tests error handling for missing required columns
+
+#### Analysis Function Tests
+- `test_perform_analysis`: Validates the perform_analysis function
+
+#### CLI Functionality Tests
+- `test_main_function_calls`: Validates that main function calls the right functions
+
+#### Integration Tests
+- `test_load_real_csv_files`: Validates loading all real CSV files
+- `test_perform_analysis_on_real_data`: Validates performing analysis on real data
+- `test_risk_distribution_in_real_data`: Validates risk distribution in real data
+
+#### Test Execution
+Tests can be executed using:
+```bash
+python -m unittest discover tests/ -v
+```
 
 ---
 
 ## 8. 🚀 Deployment Plan
 
 ### 8.1 Pre-deployment Checklist
-- [ ] All formulas and calculations validated
-- [ ] PivotTables and charts functional
-- [ ] Summary report complete and accurate
-- [ ] Documentation files created
+- [ ] Python application runs without errors
+- [ ] Risk calculations are accurate and consistent
+- [ ] Output CSV contains all required information
+- [ ] Documentation files created and updated
 - [ ] GitHub repository structure complete
 
 ### 8.2 GitHub Repository Setup
@@ -267,26 +306,24 @@ This Technical Design Document (TDD) outlines the technical approach, implementa
 5. Verify all files are properly committed and pushed
 
 ### 8.3 Final Validation
-- Open ODS file in LibreOffice Calc to verify functionality
-- Test all interactive elements (PivotTables, charts)
-- Verify all documentation is accurate and complete
-- Confirm README.md includes required screenshots and information
+- Run application with sample data to verify functionality
+- Test CLI argument parsing
+- Verify output CSV structure and content
+- Confirm README.md includes required usage instructions
 
 ---
 
 ## 9. 📈 Success Criteria
 
 The technical implementation is successful when:
-- [ ] LibreOffice Calc file opens without errors
-- [ ] All 50 rows of data are properly loaded and formatted
+- [ ] Python CLI application processes input CSV correctly
+- [ ] Risk analysis report is generated in CSV format
 - [ ] All calculated fields (Risk_Score, Risk_Category, etc.) function correctly
-- [ ] All 4 PivotTables display accurate information
-- [ ] All 3 charts visualize data effectively
-- [ ] Summary report contains accurate metrics as specified in PRD
+- [ ] Risk factor analysis provides meaningful insights
+- [ ] Output contains accurate metrics as specified in PRD
 - [ ] GitHub repository contains all required files and documentation
-- [ ] README.md includes screenshots and proper project description
-- [ ] CHANGELOG.md documents the development process
-- [ ] All formulas are properly documented
+- [ ] README.md includes usage instructions and project description
+- [ ] All calculations are properly documented and reproducible
 
 ---
 
@@ -295,12 +332,12 @@ The technical implementation is successful when:
 ### 10.1 Common Issues and Solutions
 | Issue | Solution |
 |-------|----------|
-| **Formulas not calculating** | Check cell formatting, ensure formula syntax is correct |
-| **PivotTables not updating** | Verify data range, refresh PivotTable manually |
-| **Charts not displaying data** | Check data source links, verify chart configuration |
-| **File won't open in Calc** | Verify ODS format, check for special characters |
+| **CSV file not found** | Verify file path is correct and file exists |
+| **Missing required columns** | Ensure input CSV matches expected schema |
+| **Python dependencies missing** | Install required packages using pip and requirements.txt |
+| **Permission errors** | Check file permissions for read/write access |
 
 ### 10.2 Performance Considerations
-- With only 50 rows, performance should not be an issue
-- Limit complex array formulas to maintain responsiveness
-- Use appropriate data types to optimize calculation speed
+- For large datasets, pandas operations are optimized for efficiency
+- Memory usage is minimized by processing data in appropriate chunks
+- Calculations are vectorized for optimal performance

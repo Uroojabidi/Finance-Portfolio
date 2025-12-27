@@ -1,0 +1,28 @@
+```mermaid
+graph TD
+    A[User Input] --> B[CSV Data File]
+    B --> C[Risk Analyzer CLI]
+    C --> D[Data Validation Module]
+    D --> E[Data Processing Module]
+    E --> F[Risk Calculation Module]
+    F --> G[Analysis Module]
+    G --> H[Output Generation Module]
+    H --> I[CSV Risk Report]
+    H --> J[Summary Statistics]
+    H --> K[Individual Assessments]
+    H --> L[Risk Factor Analysis]
+    
+    C -.-> M[Error Handling]
+    D -.-> M
+    E -.-> M
+    F -.-> M
+    G -.-> M
+    H -.-> M
+    
+    style A fill:#e1f5fe
+    style I fill:#e8f5e8
+    style J fill:#e8f5e8
+    style K fill:#e8f5e8
+    style L fill:#e8f5e8
+    style M fill:#fff3e0
+```

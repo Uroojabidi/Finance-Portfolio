@@ -1,9 +1,11 @@
 # 🧪 Data Validation Tests
 
-**Project Title**: Student Loan Default Risk Analysis – University of Chicago  
-**Author**: Urooj Abidi  
-**Date**: December 26, 2025  
-**Tool**: LibreOffice Calc (v7.6+)  
+**Repository**: https://github.com/Uroojabidi/Finance-Portfolio/
+**Project Title**: Student Loan Default Risk Analysis – University of Chicago
+**Author**: Urooj Abidi
+**Email**: uroojabid203@gmail.com
+**Date**: December 26, 2025
+**Tool**: Python CLI Application
 **License**: MIT (open-source portfolio project)
 
 ---

@@ -11,12 +11,42 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Technical Design Document (technical_design_document.md)
 - Test-Driven Development document (TDD.md)
 - Qwen.md configuration file
+- Comprehensive test specifications in PRD and Technical Design Document
+- "Buy Me A Coffee" and Indeed profile links in README
+
+### Changed
+- Enhanced PRD with detailed test cases covering all functionality
+- Updated Technical Design Document with comprehensive testing strategy
+- Improved CLI command documentation in PRD
+- Added detailed test execution instructions
+- Organized tests into logical categories (Risk Calculation, Data Validation, etc.)
+
+## [2.0.0] - 2025-12-26
+### Added
+- Complete Python CLI application for risk analysis (risk_analyzer.py)
+- Unit tests using real CSV data as test fixtures
+- Comprehensive testing framework with pytest support
+- Risk scoring algorithm with multiple weighted factors
+- CLI argument parsing with input/output options
+- Detailed CSV output with multiple analysis sections
+
+### Changed
+- Migrated from LibreOffice Calc to Python CLI application
+- Updated PRD to reflect CLI-based approach
+- Updated README with CLI usage and testing instructions
+- Enhanced risk analysis algorithm with 6 weighted factors
+- Improved output format with structured CSV report
+
+### Fixed
+- Implemented proper error handling for CSV validation
+- Added comprehensive data validation checks
+- Enhanced risk calculation accuracy
 
 ## [1.0.0] - 2025-12-26
 ### Added
 - Initial release of Student Loan Default Risk Analysis project
 - Synthetic dataset with 50 student loan records (uchicago_loan_sample.csv)
-- LibreOffice Calc analysis workbook (uchicago_risk_analysis.ods)
+- LibreOffice Calc analysis workbook (uchicago_risk_analysis.ods_structure.txt)
 - Complete exploratory data analysis with PivotTables
 - Risk segmentation and categorization system
 - Summary report with key metrics and recommendations

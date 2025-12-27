@@ -1,18 +1,34 @@
-# 📄 Product Requirements Document (PRD)  
-**Project Title**: Student Loan Default Risk Analysis – University of Chicago  
-**Author**: Urooj Abidi 
-**Date**: December 27, 2025  
-**Tool**: LibreOffice Calc (v7.6+)  
-**License**: MIT (open-source portfolio project)  
+# 📄 Product Requirements Document (PRD)
+**Repository**: https://github.com/Uroojabidi/Finance-Portfolio/
+**Project Title**: Student Loan Default Risk Analysis – University of Chicago
+**Author**: Urooj Abidi
+**Email**: uroojabid203@gmail.com
+**Date**: December 27, 2025
+**Tool**: Python CLI Application
+**License**: MIT (open-source portfolio project)
+
+---
+
+## 📋 Table of Contents
+- [Objective](#-objective)
+- [Scope](#-scope)
+- [Input Data Specification](#-input-data-specification)
+- [Output Requirements](#-output-requirements)
+- [CLI Command Requirements](#-cli-command-requirements)
+- [GitHub Repository Structure](#-github-repository-structure)
+- [References](#-references)
+- [Success Criteria](#-success-criteria)
+- [Timeline](#-timeline-suggested)
+- [Ethics & Compliance](#-ethics--compliance)
 
 ---
 
 ## 1. 🎯 Objective
 
-To build an **accessible, transparent, and reproducible risk analysis workbook** that:
+To build an **accessible, transparent, and reproducible risk analysis CLI tool** that:
 - Identifies key predictors of student loan default among University of Chicago-affiliated borrowers
 - Provides actionable insights for financial counselors or institutional aid offices
-- Demonstrates foundational data analysis skills using **only spreadsheet tools** (no coding)
+- Demonstrates foundational data analysis skills using **Python programming**
 
 > 🔍 **Note**: This is a **synthetic/simulated analysis** for educational purposes—**not real borrower data**.
 
@@ -23,156 +39,207 @@ To build an **accessible, transparent, and reproducible risk analysis workbook**
 ### ✅ In Scope
 | Component | Description |
 |--------|-------------|
-| **Input Dataset** | Synthetic sample of 50 student loan records with UChicago-relevant variables |
-| **Exploratory Data Analysis (EDA)** | PivotTables, histograms, conditional formatting, calculated fields |
+| **Input Dataset** | CSV file with student loan records and relevant variables |
+| **CLI Application** | Command-line interface for risk analysis |
+| **Exploratory Data Analysis (EDA)** | Statistical summaries, correlations, risk factors |
 | **Risk Segmentation** | Categorize loans into Low / Medium / High risk |
-| **Summary Report** | One-page executive summary with metrics and recommendations |
-| **GitHub Repository** | Public repo with data, analysis file, and documentation |
+| **Summary Report** | CSV output with metrics and risk assessments |
+| **GitHub Repository** | Public repo with data, Python code, and documentation |
 
 ### ❌ Out of Scope
 - Real-time data integration
-- Machine learning or statistical modeling
 - Web deployment or dashboarding
 - Use of actual student records (privacy-compliant by design)
+- Machine learning model deployment
+
+## 4. 🏗️ Architecture Diagram
+
+View the system architecture diagram [here](../docs/diagram/architecture.mmd).
+
+### 📊 System Components
+- **Input Layer**: CSV data file containing loan records
+- **Processing Layer**: Risk Analyzer CLI with validation and calculation modules
+- **Output Layer**: Risk reports and analysis summaries
+- **Error Handling**: Comprehensive error management throughout the process
 
 ---
 
-## 3. 📊 Input Data Specification
+## 5. 📊 Input Data Specification
 
 | Field | Type | Description | Example |
 |------|------|-----------|--------|
-| `Loan_ID` | Text | Unique identifier | `S001` |
-| `Student_ID` | Text | Anonymized student ID | `UCHI001` |
+| `Loan_ID` | Text | Unique identifier | `UCH001` |
 | `Age` | Integer | Borrower age at loan origination | `24` |
-| `Gender` | Text | Male / Female / Non-Binary | `Female` |
-| `Race_Ethnicity` | Text | U.S. federal categories (for equity analysis only) | `Black` |
+| `Citizenship` | Text | U.S. / International | `U.S.` |
 | `Major` | Text | Field of study | `Economics` |
-| `Graduated` | Boolean | Yes / No | `Yes` |
-| `Disability` | Boolean | Yes / No | `No` |
-| `Military` | Boolean | Yes / No | `No` |
-| `Employment_Status` | Text | Unemployed / Part-Time / Full-Time | `Full-Time` |
-| `Expected_Annual_Income` | Currency | Projected post-grad income | `85000` |
-| `Loan_Type` | Text | Federal / Private | `Federal` |
-| `Principal_Balance` | Currency | Initial loan amount | `32000` |
-| `Interest_Rate` | Percentage | Annual rate (%) | `5.05` |
-| `Monthly_Payment` | Currency | Estimated payment | `340` |
-| `Repayment_Plan` | Text | Standard / Income-Driven | `Standard` |
-| `Default` | Boolean | Target variable: Yes / No | `No` |
+| `Degree_Level` | Text | Bachelor / Master / PhD / JD | `Bachelor` |
+| `Expected_Income` | Integer | Projected post-grad income | `65000` |
+| `Employment_Status` | Text | Employed / Unemployed | `Employed` |
+| `Credit_Score` | Integer or N/A | Credit score (if available) | `720` |
+| `Loan_Amount` | Integer | Loan principal amount | `30000` |
+| `Interest_Rate` | Float | Annual interest rate (%) | `6.2` |
+| `Monthly_Payment` | Integer | Estimated monthly payment | `335` |
+| `DTI_Ratio` | Float | Debt-to-income ratio | `0.062` |
+| `Has_Cosigner` | Text | Yes / No | `Yes` |
+| `Default` | Text | Target variable: Yes / No | `No` |
 
-> 📥 **File Format**: `data/uchicago_loan_sample.csv` (UTF-8, comma-delimited)
+> 📥 **File Format**: CSV file (UTF-8, comma-delimited)
 
 ---
 
-## 4. 📈 Output Requirements
+## 6. 📈 Output Requirements
 
-### A. **Analysis Workbook** (`analysis/uchicago_risk_analysis.ods`)
-Must include these sheets:
-1. `Raw_Data` – Cleaned input dataset  
-2. `PivotTables` –  
-   - Default rate by `Graduated`  
-   - Default rate by `Major`  
-   - Avg. income by `Default`  
-   - Default rate by `Loan_Type`  
-3. `Charts` –  
-   - Bar chart: Default % by Major  
-   - Scatter: Income vs Monthly Payment (color by Default)  
-   - Pie: Loan Type Distribution  
-4. `Summary_Report` – Executive summary (as described in Section 5)
+### A. **Risk Analysis Report** (CSV output)
+Must include these sections:
+1. `Summary_Stats` – Overall statistics and default rate
+2. `Risk_Factors` – Analysis of key risk factors by category
+3. `Individual_Assessments` – Risk scores for each loan
+4. `Recommendations` – Actionable insights based on analysis
 
-### B. **Calculated Fields (Formulas)**
-| Field | LibreOffice Calc Formula |
+### B. **Calculated Fields (Python)**
+| Field | Python Calculation |
 |------|--------------------------|
-| `Payment_to_Income_Ratio` | `=Monthly_Payment / (Expected_Annual_Income / 12)` |
-| `Risk_Score` | `=IF(Graduated="No",2,0) + IF(Loan_Type="Private",3,0) + IF(Expected_Annual_Income<45000,2,0)` |
-| `Risk_Category` | `=IF(Risk_Score>=5,"High",IF(Risk_Score>=2,"Medium","Low"))` |
-
-> 💡 **Note**: All formulas must be **documented in comments** or a `Formulas` sheet.
+| `Payment_to_Income_Ratio` | `Monthly_Payment / (Expected_Income / 12)` |
+| `Risk_Score` | Weighted sum of risk factors |
+| `Risk_Category` | Categorized based on Risk_Score thresholds |
 
 ---
 
-## 5. 📋 Summary Report Content
+## 7. 📋 CLI Command Requirements
 
-Include on a dedicated sheet in the ODS file:
+### Command Syntax
+```
+python risk_analyzer.py --input <path_to_csv> --output <output_path>
+```
 
-### 📌 Executive Summary
-> “In this synthetic sample of 50 University of Chicago-affiliated borrowers, 18% defaulted. Non-graduates, private loan holders, and borrowers with expected income below $45K are at highest risk.”
+### Command Options
+- `--input`: Path to input CSV file (required)
+- `--output`: Path for output CSV report (optional, defaults to risk_report.csv)
+- `--verbose`: Enable detailed logging (optional)
 
-### 📊 Key Metrics Table
-| Metric | Value |
-|------|-------|
-| Total Loans | 50 |
-| Default Rate | 18% |
-| Avg. Income (Default) | $36,200 |
-| Avg. Income (Paid) | $82,500 |
-| Default Rate (Not Graduated) | 67% |
+### Expected Output
+- CSV file with comprehensive risk analysis
+- Console summary of key findings
+- Risk scores and categories for each loan
 
-### 🛡️ Recommendations
-1. Prioritize **degree completion support** for at-risk students  
-2. Counsel private loan borrowers on **federal consolidation**  
-3. Flag majors with **low ROI** for financial literacy programs  
+### Testing
+The application includes comprehensive unit tests to validate functionality:
+```bash
+python -m unittest discover tests/ -v
+```
+
+#### Test Categories
+The test suite includes 19 tests across multiple categories:
+
+**Risk Calculation Tests:**
+- `test_calculate_risk_score_employed_low_income`: Test risk score calculation for employed person with low income
+- `test_calculate_risk_score_unemployed`: Test risk score calculation for unemployed person
+- `test_calculate_risk_score_high_dti`: Test risk score calculation for high DTI ratio
+- `test_calculate_risk_score_low_credit`: Test risk score calculation for low credit score
+- `test_calculate_risk_score_international`: Test risk score calculation for international student
+- `test_calculate_risk_score_all_factors`: Test risk score calculation with all risk factors
+- `test_assign_risk_category_low`: Test risk category assignment for low risk
+- `test_assign_risk_category_medium`: Test risk category assignment for medium risk
+- `test_assign_risk_category_high`: Test risk category assignment for high risk
+
+**Risk Calculation Utility Tests:**
+- `test_calculate_payment_to_income_ratio`: Test payment-to-income ratio calculation
+- `test_calculate_payment_to_income_ratio_zero_income`: Test payment-to-income ratio with zero income
+
+**Data Loading and Validation Tests:**
+- `test_load_and_validate_data_success`: Test successful loading and validation of data
+- `test_load_and_validate_data_missing_file`: Test error handling for missing file
+- `test_load_and_validate_data_missing_columns`: Test error handling for missing required columns
+
+**Analysis Function Tests:**
+- `test_perform_analysis`: Test the perform_analysis function
+
+**CLI Functionality Tests:**
+- `test_main_function_calls`: Test that main function calls the right functions
+
+**Integration Tests:**
+- `test_load_real_csv_files`: Test loading all real CSV files
+- `test_perform_analysis_on_real_data`: Test performing analysis on real data
+- `test_risk_distribution_in_real_data`: Test risk distribution in real data
+
+#### Test Coverage
+Tests validate:
+- CLI argument parsing
+- CSV data validation and loading
+- Risk calculation algorithms
+- Risk category assignments
+- Payment-to-income ratio calculations
+- Output generation
+- Error handling for missing files and invalid data
+- Integration with real data files
 
 ---
 
-## 6. 📁 GitHub Repository Structure
+## 8. 📁 GitHub Repository Structure
 
 ```
 /uchicago-student-loan-risk/
-├── README.md                 # Project overview, findings, screenshots
+├── README.md                 # Project overview, usage instructions
+├── risk_analyzer.py          # Main Python CLI application
+├── requirements.txt          # Python dependencies
 ├── data/
-│   └── uchicago_loan_sample.csv
-├── analysis/
-│   └── uchicago_risk_analysis.ods   # LibreOffice Calc file
+│   └── Qwen_csv_20251225_upsmabt6b.csv
+├── output/
+│   └── risk_report.csv       # Sample output file
 └── docs/
+    ├── PRD.md                # Product Requirements Document
+    ├── technical_design_document.md # Technical Design Document
     ├── methodology.md        # EDA steps, assumptions, variable definitions
     └── references.md         # Citations (APA format)
 ```
 
-> 📸 **README.md must include**:  
-> - 2–3 screenshots of key charts/tables  
-> - Link to public data sources (e.g., College Scorecard)  
+> 📸 **README.md must include**:
+> - Usage instructions for the CLI tool
+> - Example output and findings
+> - Link to public data sources (e.g., College Scorecard)
 > - Note: “This is a synthetic educational project—no real borrower data used.”
 
 ---
 
-## 7. 📚 References (APA Format)
+## 9. 📚 References (APA Format)
 
 Include in `docs/references.md`:
 
-> U.S. Department of Education, Office of Federal Student Aid. (2023). *Federal student loan portfolio summary*. https://studentaid.gov/data-center/student/portfolio  
->  
-> National Center for Education Statistics. (2022). *Student loan default rates by institution and completion status* (NCES 2022-155). https://nces.ed.gov/pubsearch/pubsinfo.asp?pubid=2022155  
->  
+> U.S. Department of Education, Office of Federal Student Aid. (2023). *Federal student loan portfolio summary*. https://studentaid.gov/data-center/student/portfolio
+>
+> National Center for Education Statistics. (2022). *Student loan default rates by institution and completion status* (NCES 2022-155). https://nces.ed.gov/pubsearch/pubsinfo.asp?pubid=2022155
+>
 > College Scorecard. (2025). *University of Chicago (172980)*. U.S. Department of Education. https://collegescorecard.ed.gov/school/?172980
 
 ---
 
-## 8. ✅ Success Criteria
+## 10. ✅ Success Criteria
 
 Your project is complete when:
-- [ ] Dataset has **exactly 50 rows**, matches spec
-- [ ] LibreOffice file opens without errors
-- [ ] All PivotTables and charts are **dynamic** (refreshable)
-- [ ] Summary report fits on **one page**
-- [ ] GitHub repo includes **README with screenshots** and **proper citations**
+- [ ] CLI application processes CSV input correctly
+- [ ] Risk analysis report is generated in CSV format
+- [ ] All key metrics are calculated accurately
+- [ ] Risk scoring algorithm works as expected
+- [ ] GitHub repo includes **README with usage instructions** and **proper citations**
 
 ---
 
-## 9. ⏳ Timeline (Suggested)
+## 11. ⏳ Timeline (Suggested)
 
 | Task | Time Estimate |
 |------|---------------|
-| Build dataset & import into Calc | 1 hour |
-| Create PivotTables & charts | 2 hours |
-| Write summary & formulas | 1 hour |
+| Update PRD for CLI approach | 0.5 hours |
+| Design Python application | 1.5 hours |
+| Implement CLI application | 2 hours |
+| Test with sample data | 1 hour |
 | Format GitHub repo + README | 1 hour |
-| **Total** | **~5 hours** |
+| **Total** | **~6 hours** |
 
 ---
 
-## 10. 🔐 Ethics & Compliance
+## 12. 🔐 Ethics & Compliance
 
-- No real PII (personally identifiable information) used  
-- Race/gender used **only for disparity analysis**, not prediction  
-- Clearly labeled as **synthetic educational project**  
-- Compliant with LibreOffice’s open-source ethos  
-s
+- No real PII (personally identifiable information) used
+- Synthetic data used for educational purposes only
+- Clearly labeled as **synthetic educational project**
+- Compliant with open-source software principles

@@ -1,116 +1,68 @@
 # Commit Messages for Student Loan Default Risk Analysis
 
-## Initial Commit
+## Version 2.0.0 Release - CLI Application
 ```
-feat: Initialize Student Loan Default Risk Analysis project
+feat: Migrate to Python CLI application for risk analysis
 
-- Create project structure with data, analysis, and docs directories
-- Add initial Product Requirements Document (PRD.md)
-- Set up basic repository structure as specified in PRD
-- Add LICENSE file with MIT license for open-source portfolio project
-- Include .gitignore for LibreOffice Calc files and system files
+- Replace LibreOffice Calc approach with Python CLI application
+- Implement risk_analyzer.py with comprehensive risk analysis
+- Add risk scoring algorithm with multiple weighted factors
+- Create CLI argument parsing for input/output options
+- Implement data validation and error handling
+- Generate structured CSV output with multiple analysis sections
 
-Co-authored-by: Urooj Abidi <uroojabid203@gmail.com>
-```
-
-## Adding Technical Design Documents
-```
-docs: Add Technical Design Document and supporting files
-
-- Create comprehensive Technical Design Document (TDD.md) 
-- Add Test-Driven Development document (TDD.md)
-- Include Qwen.md with master prompt configuration
-- Document all assumptions, implementation steps, and system architecture
-- Detail the data schema and analysis approach
-
-Co-authored-by: Urooj Abidi <uroojabid203@gmail.com>
+Co-authored-by: Urooj Abidi <author@example.com>
 ```
 
-## Adding Changelog
+## Adding Unit Tests
 ```
-docs: Add CHANGELOG.md following Keep a Changelog format
+test: Add comprehensive unit tests with real CSV data
 
-- Document all notable changes to the project
-- Follow semantic versioning principles
-- Include initial release notes for version 1.0.0
-- Document features, changes, and fixes
+- Create test suite for risk calculation functions
+- Implement integration tests using real data files
+- Add validation for CLI argument parsing
+- Include tests for data loading and validation
+- Verify output generation functionality
+- Ensure all tests pass with real-world data
 
-Co-authored-by: Urooj Abidi <uroojabid203@gmail.com>
-```
-
-## Creating Synthetic Dataset
-```
-data: Add synthetic student loan dataset with 50 records
-
-- Generate realistic sample data matching PRD specifications
-- Include all required fields: Loan_ID, Student_ID, Age, Gender, etc.
-- Ensure data follows realistic distributions for University of Chicago context
-- Maintain 18% default rate as specified in PRD
-- Format as UTF-8 CSV file
-
-Co-authored-by: Urooj Abidi <uroojabid203@gmail.com>
+Co-authored-by: Urooj Abidi <author@example.com>
 ```
 
-## Implementing LibreOffice Calc Analysis
+## Updating Documentation
 ```
-feat: Implement risk analysis in LibreOffice Calc
+docs: Update documentation for CLI-based approach
 
-- Create comprehensive analysis workbook (uchicago_risk_analysis.ods)
-- Add Raw_Data sheet with cleaned input dataset
-- Implement all required calculated fields:
-  * Payment_to_Income_Ratio
-  * Risk_Score
-  * Risk_Category
-- Create PivotTables for analysis:
-  * Default rate by Graduated
-  * Default rate by Major
-  * Avg. income by Default
-  * Default rate by Loan Type
-- Add visualization charts:
-  * Bar chart: Default % by Major
-  * Scatter: Income vs Monthly Payment (color by Default)
-  * Pie: Loan Type Distribution
-- Create Summary_Report sheet with executive summary
+- Update README.md with CLI usage instructions
+- Add testing instructions for unit tests
+- Update PRD to reflect Python CLI implementation
+- Include command options and examples
+- Document risk scoring algorithm and categories
+- Add installation and prerequisites sections
 
-Co-authored-by: Urooj Abidi <uroojabid203@gmail.com>
+Co-authored-by: Urooj Abidi <author@example.com>
 ```
 
-## Adding Documentation and References
+## Adding Dependencies
 ```
-docs: Add methodology and references documentation
+build: Add requirements.txt for Python dependencies
 
-- Create methodology.md explaining EDA steps and variable definitions
-- Add references.md with APA format citations
-- Include sources for student loan default research
-- Document analytical approach and assumptions
+- Include pandas as primary dependency
+- Specify minimum version requirements
+- Ensure compatibility with risk analysis functions
 
-Co-authored-by: Urooj Abidi <uroojabid203@gmail.com>
-```
-
-## Finalizing README
-```
-docs: Update README with project overview and findings
-
-- Add project title and description
-- Include screenshots of key charts/tables
-- Link to public data sources (e.g., College Scorecard)
-- Note that this is a synthetic educational project
-- Add instructions for using the analysis
-- Document findings from risk analysis
-
-Co-authored-by: Urooj Abidi <uroojabid203@gmail.com>
+Co-authored-by: Urooj Abidi <author@example.com>
 ```
 
-## Final Release
+## Initial Release
 ```
-release: Version 1.0.0 - Complete Student Loan Default Risk Analysis
+release: Version 2.0.0 - Complete Python CLI Risk Analysis Tool
 
-- Complete all requirements from Product Requirements Document
-- Implement analysis using LibreOffice Calc as specified
-- Ensure all PivotTables and charts are dynamic and refreshable
-- Verify summary report fits on one page with required metrics
-- Confirm GitHub repository includes all required components
-- Validate all formulas are properly documented
+- Implement full CLI application for student loan risk analysis
+- Add comprehensive unit tests with real data fixtures
+- Include risk scoring based on 6 weighted factors
+- Generate detailed CSV reports with analysis sections
+- Support command-line options for input/output
+- Ensure all tests pass and application is production-ready
 
-Co-authored-by: Urooj Abidi <uroojabid203@gmail.com>
+Co-authored-by: Urooj Abidi <author@example.com>
 ```
